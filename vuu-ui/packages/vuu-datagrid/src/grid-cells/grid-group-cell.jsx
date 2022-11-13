@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from "react";
 import cx from "classnames";
 import { metadataKeys } from "@finos/vuu-utils";
 import GridContext from "../grid-context";
-import { getGroupValueAndOffset } from "../grid-model/grid-model-utils";
+import { getGroupValueAndOffset } from "../grid-model/gridModelUtils";
 
 import "./grid-group-cell.css";
 

@@ -9,13 +9,13 @@ import React, {
 } from "react";
 import cx from "classnames";
 import { buildColumnMap, metadataKeys } from "@finos/vuu-utils";
-import GridContext from "./grid-context";
-import ColumnGroupHeader from "./column-group-header";
-import useScroll from "./use-scroll";
-import useUpdate from "./use-update";
+import GridContext from "../grid-context";
+import ColumnGroupHeader from "../column-group-header";
+import useScroll from "../use-scroll";
+import useUpdate from "../use-update";
 import canvasReducer, { initCanvasReducer } from "./canvas-reducer";
-import Row from "./grid-row";
-import { getColumnOffset } from "./grid-model/grid-model-utils";
+import Row from "../grid-row";
+import { getColumnOffset } from "../grid-model/gridModelUtils";
 
 const { IDX, RENDER_IDX, SELECTED } = metadataKeys;
 // const byKey = (row1, row2) => row1[RENDER_IDX] - row2[RENDER_IDX];
@@ -23,7 +23,7 @@ const { IDX, RENDER_IDX, SELECTED } = metadataKeys;
 const classBase = "vuuDataGridCanvas";
 
 /** @type {Canvas} */
-const Canvas = forwardRef(function Canvas(
+export const Canvas = forwardRef(function Canvas(
   {
     columnGroupIdx,
     contentHeight,
@@ -342,8 +342,6 @@ const Canvas = forwardRef(function Canvas(
     </div>
   );
 });
-
-export default Canvas;
 
 const getHeaderCells = (canvasEl) =>
   Array.from(canvasEl.current.querySelectorAll("[role='columnheader']"));

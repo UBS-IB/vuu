@@ -1,6 +1,6 @@
 import { useCallback, useContext, useRef } from "react";
 import { useResizeObserver } from "./utils";
-import { ROW_HEIGHT } from "./grid-model/grid-model-actions";
+import { ROW_HEIGHT } from "./grid-model/gridModelActions";
 import GridContext from "./grid-context";
 
 const dimensions = ["height"];

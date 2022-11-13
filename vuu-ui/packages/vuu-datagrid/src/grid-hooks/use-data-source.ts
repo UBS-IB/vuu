@@ -1,5 +1,5 @@
 import { DataSourceRow, SubscribeCallback } from "@finos/vuu-data";
-import { VuuDataRow, VuuRange } from "../../vuu-protocol-types";
+import { VuuDataRow, VuuRange } from "../../../vuu-protocol-types";
 import { getFullRange, metadataKeys, WindowRange } from "@finos/vuu-utils";
 import {
   useCallback,
@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 
-import GridContext from "./grid-context";
+import GridContext from "../grid-context";
 
 const { RENDER_IDX } = metadataKeys;
 
@@ -29,7 +29,7 @@ type SubscriptionDetails = {
 // }
 
 //TODO allow subscription details to be set before subscribe call
-export default function useDataSource(
+export function useDataSource(
   subscriptionDetails: SubscriptionDetails,
   gridModel,
   onConfigChange,

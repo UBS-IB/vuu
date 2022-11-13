@@ -3,7 +3,7 @@ import cx from "classnames";
 import { useContextMenu } from "@finos/ui-controls";
 
 import GridContext from "../grid-context";
-import { GridModel } from "../grid-model/grid-model-utils";
+import { GridModel } from "../grid-model/gridModelUtils";
 import { useDragStart } from "../use-drag";
 import { FilterIndicator } from "./filter-indicator";
 import { SortIndicator } from "./sort-indicator";

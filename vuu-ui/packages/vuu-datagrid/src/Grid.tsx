@@ -1,33 +1,34 @@
-import React, {
+import { useForkRef } from "@heswell/uitk-core";
+import { ContextMenuProvider } from "@finos/ui-controls";
+import cx from "classnames";
+import {
+  ForwardedRef,
   forwardRef,
   useCallback,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { ContextMenuProvider } from "@finos/ui-controls";
-import { useForkRef } from "@heswell/uitk-core";
-import cx from "classnames";
-import { GridProvider } from "./grid-context";
+import { ComponentProvider } from "./component-context";
 import { buildContextMenuDescriptors, useContextMenu } from "./context-menu";
 import * as Action from "./context-menu/context-menu-actions";
-import * as GridModelAction from "./grid-model/grid-model-actions";
-import { RowHeightCanary } from "./row-height-canary";
-import { ComponentProvider } from "./component-context";
-import { useGridModel } from "./grid-model/use-grid-model";
+import { GridProvider } from "./grid-context";
 import {
   useGridActions,
   useKeyboardNavigation,
   useScrollInducedLayoutShift,
   useSelection,
 } from "./grid-hooks";
-import Viewport from "./viewport";
-import { measureColumns } from "./grid-model/grid-model-utils";
+import { measureColumns, useGridModel } from "./grid-model";
+import { ConfigChange, GridProps } from "./gridTypes";
+import { RowHeightCanary } from "./row-height-canary";
 import components from "./standard-renderers";
+import { Viewport } from "./Viewport";
 
-import { Footer, Header, InlineHeader } from "./grid-adornments";
+import { Footer, GridAdornment, Header, InlineHeader } from "./grid-adornments";
 
 import "./grid.css";
+
 // TODO use a null datasource and empty columns defs
 // display a warning if loaded with no dataSource
 
@@ -37,7 +38,7 @@ const MIN_COLUMN_WIDTH = 80;
 
 const baseClass = "vuuDataGrid";
 
-const Grid = forwardRef(function Grid(
+export const Grid = forwardRef(function Grid(
   {
     aggregations,
     cellSelectionModel = "none",
@@ -62,8 +63,8 @@ const Grid = forwardRef(function Grid(
     style: styleProp,
     width: widthProp,
     ...htmlAttributes
-  },
-  ref
+  }: GridProps,
+  forwardedRef: ForwardedRef<HTMLDivElement>
 ) {
   console.log({ columns });
 
@@ -134,7 +135,7 @@ const Grid = forwardRef(function Grid(
   );
 
   const handleConfigChange = useCallback(
-    ({ type }) => {
+    ({ type }: ConfigChange) => {
       if (onConfigChange) {
         switch (type) {
           case "columns": {
@@ -195,7 +196,7 @@ const Grid = forwardRef(function Grid(
       // TODO we need the final scrollLeft here
       invokeScrollAction({ type: "scroll-end-horizontal" });
       dispatchGridModelAction({
-        type: GridModelAction.ADD_COL,
+        type: "add-col",
         column,
         insertIdx,
       });
@@ -237,7 +238,7 @@ const Grid = forwardRef(function Grid(
           <div
             {...htmlAttributes}
             className={cx(baseClass, className)}
-            ref={useForkRef(ref, rootRef)}
+            ref={useForkRef(forwardedRef, rootRef)}
             role="grid"
             style={style}
             tabIndex={0}
@@ -266,12 +267,14 @@ const Grid = forwardRef(function Grid(
       </ContextMenuProvider>
     </GridProvider>
   );
-});
+}) as React.ForwardRefExoticComponent<GridProps> & {
+  Header: GridAdornment;
+  InlineHeader: GridAdornment;
+  Footer: GridAdornment;
+};
 
 Grid.Header = Header;
 Grid.InlineHeader = InlineHeader;
 Grid.Footer = Footer;
 
 Grid.displayName = "Grid";
-
-export default Grid;
