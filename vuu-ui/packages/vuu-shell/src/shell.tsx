@@ -27,6 +27,7 @@ import { AppHeader } from "./app-header";
 
 import { LayoutJSON } from "@finos/vuu-layout/src/layout-reducer";
 import "./shell.css";
+import { BottomBar } from "./bottom-bar";
 
 export type VuuUser = {
   username: string;
@@ -162,6 +163,7 @@ export const Shell = ({
                 />
               )}
             </Chest>
+            <BottomBar />
           </Flexbox>
         </DraggableLayout>
       </LayoutProvider>

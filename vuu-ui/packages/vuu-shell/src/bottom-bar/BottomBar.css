@@ -1,0 +1,5 @@
+.bottom-bar {
+  width: 100%;
+  height: 3em;
+  display: flex;
+}
