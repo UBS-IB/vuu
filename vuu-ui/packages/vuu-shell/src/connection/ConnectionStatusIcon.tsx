@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import cx from 'classnames';
 import './Connection.css';
-import { useServerConnectionStatus } from "../../../vuu-data/src";
 
 export interface IconProps {
+  connectionStatus: string;
   className?: string;
   props?: any;
   element?: string;
 }
 
-const ConnectionStatusIcon = ({ className, element = 'span', ...props}: IconProps) => {
-  let connectionStatus = useServerConnectionStatus();
+const ConnectionStatusIcon = ({ connectionStatus, className, element = 'span', ...props}: IconProps) => {
   const [classBase, setClassBase] = useState<string>('vuuConnectingStatus');
   useEffect(() => {
     switch (connectionStatus) {

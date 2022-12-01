@@ -4,16 +4,14 @@
   padding: 1em 0.5em;
 }
 
-/* .vuuStatus-text {
+.vuuStatus-text {
   align-self: center;
-} */
+}
 
 .vuuStatus {
   --vuu-icon-size: var(--hwButton-icon-size, 32px);
   --vuu-icon-svg-size: 12px;
-  /* --vuu-icon-inset: calc(50% - 12px) auto auto -3px; */
   --vuu-icon-bg: var(--hwStatus-bg, transparent);
-  /* --vuu-icon-svg: var(--svg-grab-handle); */
   --vuu-icon-border: none;
   --vuu-icon-height: 18px;
   --vuu-icon-highlight-bg: var(--hwStatus-highlight-bg, var(--hw-gray-700));
@@ -35,22 +33,14 @@
   padding: 0 var(--vuu-icon-padding);
   width: var(--vuu-icon-width);
   position: relative;
-  /* inset: 0 auto 0 0; */
+  inset: 0 auto 0 0;
 }
 
 .vuuStatus[data-icon]::after {
-  /* --height: var(--vuu-icon-height, var(--vuu-icon-size, 12px)); */
-  /* --width: var(--vuu-icon-width, var(--vuu-icon-size, 12px)); */
-
   inset: 0 0 0 0;
-  content: '';
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-  position: absolute;
-    /* transform: scale(1); */
-    /* animation: pulse 1s infinite; */
+  height: var(--vuu-icon-height);
   mask: var(--vuu-icon-svg) center center/20px 20px no-repeat;
   -webkit-mask: var(--vuu-icon-svg) center center/20px 20px no-repeat;
-  width: var(--vuu-icon-width);
 }
 
 .vuuActiveStatus::after {
