@@ -10,29 +10,8 @@ interface ConnectionStatusIconProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const classBase = 'vuuIcon vuuStatus';
-// const {className: classNameProp, connectionStatus, ...props} = props;
 
 export const ConnectionStatusIcon = ({ connectionStatus, className, element = 'span', ...props}: ConnectionStatusIconProps) => {
-
-  // const [classBase, setClassBase] = useState<string>('vuuConnectingStatus');
-  // useEffect(() => {
-  //   switch (connectionStatus) {
-  //     case 'connected':
-  //     case 'reconnected':
-  //       setClassBase('vuuActiveStatus');
-  //       break;
-  //     case 'connecting':
-  //       setClassBase('vuuConnectingStatus');
-  //       break;
-  //     case 'disconnected':
-  //       setClassBase('vuuDisconnectedStatus');
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }, [connectionStatus]);
-
-
   let statusIcon = React.createElement (
     element,
     {
