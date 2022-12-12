@@ -11,8 +11,14 @@
   --uitk-size-sharktooth-height: 5px;
   --uitk-size-sharktooth-width: 10px;
 
-  --uitk-size-divider-height: calc(var(--uitk-size-base) - (1.5 * var(--uitk-size-unit)) - (0.5 * var(--uitk-size-basis-unit)));
-  --uitk-size-selection: calc(var(--uitk-size-base) - (1.5 * var(--uitk-size-unit)) - (0.5 * var(--uitk-size-basis-unit)));
+  --uitk-size-divider-height: calc(
+    var(--uitk-size-base) - (1.5 * var(--uitk-size-unit)) -
+      (0.5 * var(--uitk-size-basis-unit))
+  );
+  --uitk-size-selection: calc(
+    var(--uitk-size-base) - (1.5 * var(--uitk-size-unit)) -
+      (0.5 * var(--uitk-size-basis-unit))
+  );
   --uitk-size-stackable: calc(var(--uitk-size-base) + var(--uitk-size-unit));
 
   /* TODO: Remove on size/density design work completion */

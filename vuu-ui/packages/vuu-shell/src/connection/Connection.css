@@ -1,76 +1,36 @@
-.vuuStatus-container, .vuuConnectionSpeed-container {
+.vuuStatus-container {
   display: flex;
   width: max-content;
-  padding: 1em 0.5em;
-}
-
-.vuuStatus-text {
-  align-self: center;
+  padding: var(--vuuStatus-container-padding, 5px);
+  font-size: var(--uitk-text-fontSize);
+  cursor: default;
 }
 
 .vuuStatus {
-  --vuu-icon-size: var(--hwButton-icon-size, 32px);
-  --vuu-icon-svg-size: 12px;
-  --vuu-icon-bg: var(--hwStatus-bg, transparent);
-  --vuu-icon-border: none;
   --vuu-icon-height: 18px;
-  --vuu-icon-highlight-bg: var(--hwStatus-highlight-bg, var(--hw-gray-700));
-  --vuu-icon-highlight-color: var(--hwStatus-highlight-color, var(--hw-gray-50));
-  --vuu-icon-padding: var(--hwStatus-padding, 6px);
-  --vuu-icon-width: var(--hwStatus-width, auto);
-  --vuu-icon-min-width: var(--hwStatus-min-width, 28px);
-  --vuu-icon-color: var(--hwStatus-color, var(--hw-gray-700));
-
-  align-items: center;
-  background-color: var(--vuu-icon-bg);
-  border: var(--vuu-icon-border);
-  color: var(--vuu-icon-color);
-  display: inline-flex;
+  --vuu-icon-min-width: var(--vuuStatus-min-width, 28px);
   height: var(--vuu-icon-height);
-  justify-content: center;
   min-width: var(--vuu-icon-min-width);
-  outline: none;
-  padding: 0 var(--vuu-icon-padding);
-  width: var(--vuu-icon-width);
   position: relative;
-  inset: 0 auto 0 0;
 }
 
 .vuuStatus[data-icon]::after {
   inset: 0 0 0 0;
-  height: var(--vuu-icon-height);
   mask: var(--vuu-icon-svg) center center/20px 20px no-repeat;
   -webkit-mask: var(--vuu-icon-svg) center center/20px 20px no-repeat;
 }
 
 .vuuActiveStatus::after {
-  --vuu-icon-svg: var(--svg-active-status);
-  background-color: rgb(0, 255, 0);
+  --vuu-icon-svg: var(--svg-circle-tick);
+  --vuu-icon-color: var(--uitk-status-success-foreground);
 }
 
 .vuuConnectingStatus::after {
-  --vuu-icon-svg: var(--svg-connecting-status);
-  background-color: var(--vuu-icon-color, orange);
+  --vuu-icon-svg: var(--svg-triangle-warning);
+  --vuu-icon-color: var(--uitk-status-warning-foreground);
 }
 
 .vuuDisconnectedStatus::after {
-  --vuu-icon-svg: var(--svg-disconnected-status);
-  background-color: var(--vuu-icon-color, red);
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
-    }
-
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
-    }
-
-    100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-    }
+  --vuu-icon-svg: var(--svg-cross);
+  --vuu-icon-color: var(--uitk-status-error-foreground);
 }

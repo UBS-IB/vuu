@@ -1,5 +1,6 @@
-.bottom-bar {
+.vuuBottomBar {
   width: 100%;
-  height: 3em;
+  height: var(--uitk-size-appHeader);
   display: flex;
-}
+  border-top: var(--uitk-size-topBorder);
+  }
