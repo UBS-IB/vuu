@@ -1,4 +1,5 @@
-import { connectToServer /*, useViewserver */ } from "@finos/vuu-data";
+import { connectToServer, /*, useViewserver */ 
+useServerConnectionSpeed} from "@finos/vuu-data";
 import {
   HTMLAttributes,
   MouseEvent,
@@ -99,6 +100,13 @@ export const Shell = ({
     },
     [loadLayoutById]
   );
+
+  const logger = console;
+  let connectionSpeed = useServerConnectionSpeed();
+  logger.log(
+    `There are ${connectionSpeed} messages per second coming through from the server`
+  )
+
 
   useEffect(() => {
     if (serverUrl && user.token) {

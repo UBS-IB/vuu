@@ -8,6 +8,7 @@ import {
   VuuUIMessageIn,
   VuuUIMessageInRPC,
   VuuUIMessageOut,
+  isConnectionQualityMetrics,
 } from "./vuuUIMessageTypes";
 import {
   ClientToServerRpcCall,
@@ -102,7 +103,9 @@ const getWorker = async (
 function handleMessageFromWorker({
   data: message,
 }: MessageEvent<VuuUIMessageIn>) {
-  if (isConnectionStatusMessage(message)) {
+  if (isConnectionQualityMetrics(message)) {
+    ConnectionManager.emit('connection-metrics', message);
+  } else if (isConnectionStatusMessage(message)) {
     ConnectionManager.emit("connection-status", message);
   } else if (messageShouldBeRoutedToDataSource(message)) {
     const viewport = viewports.get(message.clientViewportId);

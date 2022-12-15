@@ -2,6 +2,7 @@ import { connect as connectWebsocket } from "@finos/vuu-data/src/websocket-conne
 import { ServerProxy } from "@finos/vuu-data/src/server-proxy/server-proxy";
 import {
   ConnectionStatusMessage,
+  isConnectionQualityMetrics,
   isConnectionStatusMessage,
   VuuUIMessageOut,
 } from "@finos/vuu-data/src/vuuUIMessageTypes";
@@ -18,10 +19,15 @@ async function connectToServer(
     // if this was called during connect, we would get a ReferenceError, but it will
     // never be called until subscriptions have been made, so this is safe.
     //TODO do we need to listen in to the connection messages here so we can lock back in, in the event of a reconnenct ?
-    (msg) =>
-      isConnectionStatusMessage(msg)
-        ? onConnectionStatusChange(msg)
-        : server.handleMessageFromServer(msg)
+    (msg) => {
+      if (isConnectionQualityMetrics(msg)) {
+        postMessage({ type: 'connection-metrics', messages: msg});
+      } else if (isConnectionStatusMessage(msg)) {
+        onConnectionStatusChange(msg)
+      } else {
+        server.handleMessageFromServer(msg)
+      }
+    }
   );
 
   server = new ServerProxy(connection, (msg) => sendMessageToClient(msg));

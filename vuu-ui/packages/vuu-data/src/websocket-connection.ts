@@ -4,9 +4,9 @@ import {
 } from "../../vuu-protocol-types";
 import { Connection } from "./connectionTypes";
 
-import { ConnectionStatus, ConnectionStatusMessage } from "./vuuUIMessageTypes";
+import { ConnectionQualityMetrics, ConnectionStatus, ConnectionStatusMessage } from "./vuuUIMessageTypes";
 
-export type ConnectionMessage = ServerToClientMessage | ConnectionStatusMessage;
+export type ConnectionMessage = ServerToClientMessage | ConnectionStatusMessage | ConnectionQualityMetrics;
 export type ConnectionCallback = (msg: ConnectionMessage) => void;
 
 // TEST_DATA_COLLECTION
@@ -128,6 +128,7 @@ export class WebsocketConnection implements Connection<ClientToServerMessage> {
   status: "closed" | "ready" | "connected" | "reconnected" = "ready";
 
   private url: string;
+  public messages: ServerToClientMessage[] = [];
 
   constructor(ws: any, url: string, callback: ConnectionCallback) {
     this.url = url;
@@ -145,6 +146,7 @@ export class WebsocketConnection implements Connection<ClientToServerMessage> {
       // TEST DATA COLLECTION
       // saveTestData(evt.data, 'server');
       const vuuMessageFromServer = parseMessage(evt.data);
+      this.messages.push(evt.data);
       // console.log(
       //   `%c<<< [${new Date().toISOString().slice(11, 23)}]  (WebSocket) ${message.body.type}
       //   ${JSON.stringify(message)}
@@ -153,6 +155,11 @@ export class WebsocketConnection implements Connection<ClientToServerMessage> {
       // );
       callback(vuuMessageFromServer);
     };
+
+    setInterval(() => {
+      callback({ type: 'connection-metrics', messagesLength: this.messages.length});
+      this.messages = []
+    }, 1000)
 
     ws.onerror = () => {
       console.log(
