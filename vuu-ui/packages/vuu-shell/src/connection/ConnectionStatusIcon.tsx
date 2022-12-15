@@ -1,22 +1,21 @@
-import React, { HTMLAttributes, useEffect, useState } from "react";
+import React, { ComponentClass, FunctionComponent, HTMLAttributes } from "react";
 import cx from 'classnames';
-import './Connection.css';
+import './ConnectionStatusIcon.css';
 
-interface ConnectionStatusIconProps extends HTMLAttributes<HTMLDivElement> {
+interface ConnectionStatusIconProps extends HTMLAttributes<HTMLElement> {
   connectionStatus: string;
   className?: string;
-  props?: any;
-  element?: string;
+  element?: 'span';
 }
 
 const classBase = 'vuuIcon vuuStatus';
 
-export const ConnectionStatusIcon = ({ connectionStatus, className, element = 'span', ...props}: ConnectionStatusIconProps) => {
+export const ConnectionStatusIcon = ({ connectionStatus, className, element='span', ...props}: ConnectionStatusIconProps) => {
   let statusIcon = React.createElement (
     element,
     {
       ...props,
-      className: cx(classBase, {
+      className: cx({
         ['vuuActiveStatus']: connectionStatus === 'connected' || connectionStatus === 'reconnected',
         ['vuuConnectingStatus']: connectionStatus === 'connecting',
         ['vuuDisconnectedStatus']: connectionStatus === 'disconnected'
@@ -25,10 +24,8 @@ export const ConnectionStatusIcon = ({ connectionStatus, className, element = 's
   )
 
   return (
-    <>
-    <div className="vuuStatus-container">
+    <div className={`${classBase} vuuStatus-container`}>
       {statusIcon}
       <div className="vuuStatus-text">Status: {connectionStatus.toUpperCase()}</div>
     </div>
-    </>
 )};
