@@ -1,4 +1,11 @@
-import { ReactElement, useCallback, useState } from "react";
+import {
+  ReactElement,
+  useCallback,
+  useState,
+  createContext,
+  ReactNode,
+  useContext,
+} from "react";
 import { Dialog } from "./Dialog";
 
 export type DialogState = {
@@ -9,6 +16,10 @@ export type DialogState = {
 
 export type SetDialog = (dialogState?: DialogState) => void;
 
+export interface DialogContextProps {
+  showDialog: (dialogContent: ReactElement, title: string) => void;
+}
+
 export const useDialog = () => {
   const [dialogState, setDialogState] = useState<DialogState>();
 
@@ -18,7 +29,7 @@ export const useDialog = () => {
 
   const dialog = dialogState ? (
     <Dialog
-      className="vuDialog"
+      className="vuuDialog"
       isOpen={true}
       onClose={handleClose}
       title={dialogState.title}
@@ -32,4 +43,34 @@ export const useDialog = () => {
     dialog,
     setDialogState,
   };
+};
+
+const defaultShowDialog = () => {
+  console.warn("No content in dialog");
+};
+const DialogContext = createContext<DialogContextProps>({
+  showDialog: defaultShowDialog,
+});
+
+export const DialogProvider = ({ children }: { children: ReactNode }) => {
+  const { dialog, setDialogState } = useDialog();
+  const showDialog = (dialogContent: ReactElement, title: string) => {
+    const content = {
+      content: dialogContent,
+      title,
+    };
+    setDialogState(content);
+  };
+
+  return (
+    <DialogContext.Provider value={{ showDialog }}>
+      {children}
+      {dialog}
+    </DialogContext.Provider>
+  );
+};
+
+export const useShowDialog = () => {
+  const { showDialog } = useContext(DialogContext);
+  return showDialog;
 };

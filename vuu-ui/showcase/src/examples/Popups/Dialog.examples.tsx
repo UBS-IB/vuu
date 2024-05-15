@@ -1,7 +1,6 @@
 import { useState } from "react";
-
 import { Component } from "@finos/vuu-layout";
-import { Dialog } from "@finos/vuu-popups";
+import { Dialog, DialogProvider, useShowDialog } from "@finos/vuu-popups";
 
 let displaySequence = 1;
 
@@ -39,3 +38,27 @@ export const DialogOpenClose = () => {
   );
 };
 DialogOpenClose.displaySequence = displaySequence++;
+
+const ComponentWithDialog = () => {
+  const showDialog = useShowDialog();
+  const showDefaultDialog = () => {
+    showDialog(
+      <div style={{ height: 100, width: 100, backgroundColor: "yellow" }} />,
+      "Edit"
+    );
+  };
+  return (
+    <div style={{ height: 100, width: 100, backgroundColor: "red" }}>
+      <button onClick={showDefaultDialog}>Show Dialog</button>
+    </div>
+  );
+};
+
+export const DialogWithProvider = () => {
+  return (
+    <DialogProvider>
+      <ComponentWithDialog />
+    </DialogProvider>
+  );
+};
+DialogWithProvider.displaySequence = displaySequence++;
